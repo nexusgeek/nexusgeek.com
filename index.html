@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusGeek - Gaming & Anime Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --accent-primary: #2563eb;
+            --accent-secondary: #7c3aed;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .logo {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 35px;
+            width: 35px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .logo span {
+            color: var(--accent-primary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: var(--accent-primary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem 3rem 2rem;
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.05) 0%, rgba(248, 250, 252, 0) 100%);
+        }
+
+        .hero h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            border-color: var(--accent-primary);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+            padding: 0 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent-primary);
+        }
+
+        .card-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            color: var(--accent-primary);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            text-transform: uppercase;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .read-more {
+            align-self: flex-start;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Full Blog Post View */
+        #blogPostView {
+            display: none;
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .back-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--accent-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .post-header h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .post-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .post-banner {
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+        }
+
+        .post-body {
+            line-height: 1.8;
+            color: var(--text-main);
+            font-size: 1.05rem;
+        }
+
+        .post-body p {
+            margin-bottom: 1.5rem;
+            color: #334155;
+        }
+
+        /* Admin Login Modal */
+        #loginModal {
+            display: none;
+            max-width: 400px;
+            margin: 4rem auto;
+            padding: 2.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Admin Upload & Manage Dashboard */
+        #uploadView {
+            display: none;
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: var(--card-bg);
+            color: var(--text-main);
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .manage-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        .admin-link {
+            cursor: pointer;
+            color: var(--accent-primary);
+            text-decoration: underline;
+            margin-left: 8px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a class="logo" onclick="showView('homeView')">
+            <img id="headerLogoImg" src="" alt="" style="display: none;">
+            <span>NEXUS</span>GEEK
+        </a>
+        <nav>
+            <ul>
+                <li><a onclick="showView('homeView')">Home</a></li>
+                <li><a onclick="filterCards('gaming'); showView('homeView');">Gaming</a></li>
+                <li><a onclick="filterCards('anime'); showView('homeView');">Anime</a></li>
+                <li><a onclick="filterCards('tech'); showView('homeView');">Tech</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HOME VIEW -->
+    <div id="homeView">
+        <section class="hero">
+            <h1>Your Ultimate Hub for <span>Gaming & Anime</span></h1>
+            <p>Explore top-tier esports guides, Free Fire tactical tips, stunning anime reviews, and deep-dive tech insights.</p>
+        </section>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterCards('all')">All Posts</button>
+            <button class="filter-btn" onclick="filterCards('gaming')">Gaming</button>
+            <button class="filter-btn" onclick="filterCards('anime')">Anime</button>
+            <button class="filter-btn" onclick="filterCards('tech')">Tech & Setup</button>
+        </div>
+
+        <div class="container">
+            <div class="grid" id="cardGrid"></div>
+        </div>
+    </div>
+
+    <!-- FULL BLOG POST VIEW -->
+    <div id="blogPostView">
+        <button class="back-btn" onclick="showView('homeView')">&larr; Back to Home</button>
+        <div class="post-header">
+            <span class="card-tag" id="postTag" style="position:static; display:inline-block; margin-bottom:1rem;">Gaming</span>
+            <h1 id="postTitle">Blog Post Title</h1>
+            <div class="post-meta">
+                <span id="postDate">Published on October 2026</span>
+                <span>By NexusGeek Admin</span>
+            </div>
+        </div>
+        <div class="post-banner" id="postBannerImg"></div>
+        <div class="post-body" id="postContentBody"></div>
+        <button class="back-btn" onclick="showView('homeView')" style="margin-top: 2rem;">&larr; Back to Home</button>
+    </div>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div id="loginModal">
+        <button class="back-btn" onclick="showView('homeView')">&larr; Back to Home</button>
+        <h2 style="font-family: 'Rajdhani'; font-size: 1.8rem; margin-bottom: 1.5rem;">Admin Verification</h2>
+        <div class="form-group">
+            <label>Enter Password</label>
+            <input type="password" id="adminPasswordInput" placeholder="Enter admin password">
+        </div>
+        <button type="button" class="submit-btn" onclick="verifyPassword()">Login</button>
+    </div>
+
+    <!-- UPLOAD & MANAGE DASHBOARD (Admin Only) -->
+    <div id="uploadView">
+        <button class="back-btn" onclick="showView('homeView')">&larr; Back to Home</button>
+        <h2 style="font-family: 'Rajdhani'; font-size: 2rem; margin-bottom: 1.5rem;">Admin Dashboard</h2>
+        
+        <!-- Logo Change Section -->
+        <div style="background: var(--card-bg); padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 2rem;">
+            <h3 style="font-family: 'Rajdhani'; margin-bottom: 1rem;">Change Website Logo</h3>
+            <div class="form-group">
+                <input type="file" id="logoInput" accept="image/*">
+            </div>
+            <button type="button" class="submit-btn" onclick="updateLogo()">Update Logo</button>
+        </div>
+
+        <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; margin-bottom: 1rem;">Upload New Blog Post</h3>
+        <form id="uploadForm" onsubmit="handleUpload(event)">
+            <div class="form-group">
+                <label>Blog Title</label>
+                <input type="text" id="newTitle" placeholder="e.g., Free Fire Max Tournament Strategy" required>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="newCategory">
+                    <option value="gaming">Gaming</option>
+                    <option value="anime">Anime</option>
+                    <option value="tech">Tech & Setup</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Custom Thumbnail / Banner Photo</label>
+                <input type="file" id="newImage" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label>Short Description (for card)</label>
+                <textarea id="newDesc" style="height: 80px;" placeholder="Brief summary..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Full Content (HTML or Paragraphs)</label>
+                <textarea id="newContent" placeholder="<p>Write your article here...</p>" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn" style="margin-bottom: 3rem;">Publish Blog Post</button>
+        </form>
+
+        <h3 style="font-family: 'Rajdhani'; font-size: 1.5rem; margin-bottom: 1rem;">Manage Existing Blogs (Delete)</h3>
+        <div id="manageBlogList"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 NexusGeek. Built for Gamers & Creators. All rights reserved. 
+           <span class="admin-link" onclick="openLoginModal()">Admin Login</span>
+        </p>
+    </footer>
+
+    <script>
+        let articles = JSON.parse(localStorage.getItem('nexus_articles')) || [
+            {
+                id: 1,
+                title: "Pro SKS & Scorp Control Layout",
+                category: "gaming",
+                tag: "Gaming",
+                desc: "Master custom HUD layouts and sensitivity settings for precise headshots in high-tier custom scrims.",
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80",
+                content: "<p>Mastering the SKS and Scorp weapon combination in Free Fire MAX requires precise custom HUD layouts and optimal sensitivity settings. In high-tier custom scrims and tournaments, milliseconds matter when taking down rushing squads.</p>"
+            },
+            {
+                id: 2,
+                title: "Shadow Monarch Arc Breakdown",
+                category: "anime",
+                tag: "Anime",
+                desc: "Analyzing Sung Jin-woo's epic awakening, key battles, and how the animation studio adapted the manhwa.",
+                image: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80",
+                content: "<p>Sung Jin-woo's transformation from the 'Weakest Hunter of All Mankind' to the terrifying Shadow Monarch remains one of the most iconic power-fantasy arcs in modern anime history.</p>"
+            },
+            {
+                id: 3,
+                title: "CapCut 2K 60FPS Render Guide",
+                category: "tech",
+                tag: "Tech",
+                desc: "Optimize your NVIDIA GPU and Constant Bitrate encoding settings for butter-smooth cinematic reels.",
+                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
+                content: "<p>Uploading cinematic anime edits or gaming montages to YouTube Shorts and Instagram Reels often suffers from compression artifacts unless rendered with precise export settings.</p>"
+            }
+        ];
+
+        // Load saved logo on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLogo = localStorage.getItem('nexus_logo');
+            if (savedLogo) {
+                const logoImg = document.getElementById('headerLogoImg');
+                logoImg.src = savedLogo;
+                logoImg.style.display = 'block';
+            }
+            renderCards('all');
+        });
+
+        function renderCards(filter = 'all') {
+            const grid = document.getElementById('cardGrid');
+            grid.innerHTML = '';
+
+            articles.forEach(art => {
+                if (filter === 'all' || art.category === filter) {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.setAttribute('data-category', art.category);
+                    card.onclick = () => openPost(art.id);
+                    card.innerHTML = `
+                        <div class="card-img" style="background-image: url('${art.image}');">
+                            <span class="card-tag">${art.tag || art.category}</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">${art.title}</h3>
+                            <p class="card-desc">${art.desc}</p>
+                            <span class="read-more">Read Article &rarr;</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+        }
+
+        function openPost(id) {
+            const article = articles.find(a => a.id === id);
+            if (!article) return;
+
+            document.getElementById('postTitle').innerText = article.title;
+            document.getElementById('postTag').innerText = article.tag || article.category;
+            document.getElementById('postBannerImg').style.backgroundImage = `url('${article.image}')`;
+            document.getElementById('postContentBody').innerHTML = article.content;
+
+            showView('blogPostView');
+        }
+
+        function showView(viewId) {
+            document.getElementById('homeView').style.display = 'none';
+            document.getElementById('blogPostView').style.display = 'none';
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('uploadView').style.display = 'none';
+
+            document.getElementById(viewId).style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if(viewId === 'uploadView') {
+                renderManageList();
+            }
+        }
+
+        function filterCards(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderCards(category);
+        }
+
+        function openLoginModal() {
+            document.getElementById('adminPasswordInput').value = '';
+            showView('loginModal');
+        }
+
+        function verifyPassword() {
+            const pwd = document.getElementById('adminPasswordInput').value;
+            if (pwd === "shriram2026") {
+                showView('uploadView');
+            } else {
+                alert("Incorrect Password! Access Denied.");
+            }
+        }
+
+        // Update Website Logo
+        function updateLogo() {
+            const fileInput = document.getElementById('logoInput');
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Image = e.target.result;
+                    localStorage.setItem('nexus_logo', base64Image);
+                    const logoImg = document.getElementById('headerLogoImg');
+                    logoImg.src = base64Image;
+                    logoImg.style.display = 'block';
+                    alert('Logo updated successfully!');
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                alert('Please select an image file first.');
+            }
+        }
+
+        // Handle Blog Upload with Custom Image
+        function handleUpload(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('newTitle').value;
+            const category = document.getElementById('newCategory').value;
+            const desc = document.getElementById('newDesc').value;
+            let content = document.getElementById('newContent').value;
+            const imageFile = document.getElementById('newImage').files[0];
+
+            if (!content.includes('<p>')) {
+                content = `<p>${content.replace(/\n\n/g, '</p><p>')}</p>`;
+            }
+
+            const tagMap = { gaming: 'Gaming', anime: 'Anime', tech: 'Tech' };
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageUrl = e.target.result;
+
+                const newArticle = {
+                    id: Date.now(),
+                    title: title,
+                    category: category,
+                    tag: tagMap[category],
+                    desc: desc,
+                    image: imageUrl,
+                    content: content
+                };
+
+                articles.unshift(newArticle);
+                localStorage.setItem('nexus_articles', JSON.stringify(articles));
+
+                alert('Blog published successfully with custom photo!');
+                document.getElementById('uploadForm').reset();
+                renderCards('all');
+                showView('uploadView');
+            };
+
+            if (imageFile) {
+                reader.readAsDataURL(imageFile);
+            } else {
+                alert('Please upload a thumbnail image.');
+            }
+        }
+
+        // Render List for Deleting Specific Posts
+        function renderManageList() {
+            const manageList = document.getElementById('manageBlogList');
+            manageList.innerHTML = '';
+
+            if(articles.length === 0) {
+                manageList.innerHTML = '<p style="color:var(--text-muted);">No blog posts available.</p>';
+                return;
+            }
+
+            articles.forEach(art => {
+                const item = document.createElement('div');
+                item.className = 'manage-list-item';
+                item.innerHTML = `
+                    <div>
+                        <strong>${art.title}</strong>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">Category: ${art.tag || art.category}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deletePost(${art.id})">Delete</button>
+                `;
+                manageList.appendChild(item);
+            });
+        }
+
+        // Delete Specific Blog Post
+        function deletePost(id) {
+            if(confirm("Are you sure you want to delete this blog post?")) {
+                articles = articles.filter(art => art.id !== id);
+                localStorage.setItem('nexus_articles', JSON.stringify(articles));
+                renderManageList();
+                renderCards('all');
+                alert("Blog post deleted successfully!");
+            }
+        }
+
+        renderCards('all');
+    </script>
+</body>
+</html>
