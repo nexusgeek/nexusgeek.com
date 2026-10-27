@@ -557,7 +557,6 @@
             }
         ];
 
-        // Load saved logo on startup
         window.addEventListener('DOMContentLoaded', () => {
             const savedLogo = localStorage.getItem('nexus_logo');
             if (savedLogo) {
@@ -640,7 +639,6 @@
             }
         }
 
-        // Update Website Logo
         function updateLogo() {
             const fileInput = document.getElementById('logoInput');
             if (fileInput.files && fileInput.files[0]) {
@@ -659,7 +657,6 @@
             }
         }
 
-        // Handle Blog Upload with Custom Image
         function handleUpload(event) {
             event.preventDefault();
 
@@ -675,37 +672,35 @@
 
             const tagMap = { gaming: 'Gaming', anime: 'Anime', tech: 'Tech' };
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imageUrl = e.target.result;
-
-                const newArticle = {
-                    id: Date.now(),
-                    title: title,
-                    category: category,
-                    tag: tagMap[category],
-                    desc: desc,
-                    image: imageUrl,
-                    content: content
-                };
-
-                articles.unshift(newArticle);
-                localStorage.setItem('nexus_articles', JSON.stringify(articles));
-
-                alert('Blog published successfully with custom photo!');
-                document.getElementById('uploadForm').reset();
-                renderCards('all');
-                showView('uploadView');
-            };
-
             if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+
+                    const newArticle = {
+                        id: Date.now(),
+                        title: title,
+                        category: category,
+                        tag: tagMap[category],
+                        desc: desc,
+                        image: imageUrl,
+                        content: content
+                    };
+
+                    articles.unshift(newArticle);
+                    localStorage.setItem('nexus_articles', JSON.stringify(articles));
+
+                    alert('Blog published successfully!');
+                    document.getElementById('uploadForm').reset();
+                    renderCards('all');
+                    showView('homeView');
+                };
                 reader.readAsDataURL(imageFile);
             } else {
-                alert('Please upload a thumbnail image.');
+                alert('Please select a thumbnail image.');
             }
         }
 
-        // Render List for Deleting Specific Posts
         function renderManageList() {
             const manageList = document.getElementById('manageBlogList');
             manageList.innerHTML = '';
@@ -729,7 +724,6 @@
             });
         }
 
-        // Delete Specific Blog Post
         function deletePost(id) {
             if(confirm("Are you sure you want to delete this blog post?")) {
                 articles = articles.filter(art => art.id !== id);
